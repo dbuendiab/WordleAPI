@@ -91,4 +91,3 @@ class Search(Corpus):
 
     def endswith(self, end_chars, orden_func=None, reverse=None, count=None, tipo=0):
         return self.search(lambda x: x[0].endswith(end_chars), orden_func, reverse, count, tipo)
-

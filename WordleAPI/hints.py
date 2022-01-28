@@ -32,56 +32,10 @@ class Hints(Search):
     ['gadge', 'gaffe', 'gagee', 'gaine', 'gaize', 'gambe', 'gange', 'gauge', 'gauze', 'gazee', 'genae', 'getae']
     """
 
-    # def __init__(self, idioma=None, corpus=None):
-    #     """Creación del corpus de soporte
-    #     Parámetros:
-    #     idioma: Opcional. Debe ser español, ingles o catalan
-    #     corpus: Opcional. Un corpus creado previamente, customizado a medida.
-    #     Debe introducirse uno solo de los dos.
-    #     """
-    #     ## Definir el corpus fuera de los condicionales
-    #     self.__corpus = None
-
-    #     if idioma == None and corpus == None:
-    #         raise HintsError("Debe introducir parámetro idioma ó un corpus")
-    #     elif idioma != None:
-    #         if idioma not in ("ingles", "español", "catalan"):
-    #             raise HintsError("Los idiomas válidos son 'español', 'ingles', 'catalan'")
-    #         elif idioma == "ingles":
-    #             self.__corpus = CorpusAPI.Corpus.ingles()
-    #         elif idioma == "español":
-    #             self.__corpus = CorpusAPI.Corpus.español()
-    #         elif idioma == "catalan":
-    #             self.__corpus = CorpusAPI.Corpus.catalan()
-    #     else:
-    #         if isinstance(corpus, CorpusAPI.Corpus):
-    #             self.__corpus = corpus
-    #         else:
-    #             raise HintsError("No ha introducido un objeto Corpus")
-    #     self.reset()
-
     def reset(self):
         """Reinicia el sistema, borrando las apuestas previas"""
         self.__tries = []
         self.__lista = self.lista
-
-    # @staticmethod
-    # def __set_invalid_chars(word, test):
-    #     invalid_chars = set()
-    #     needed_chars = set()
-    #     set_chars = set()
-    #     for (c, p) in zip(word, test):
-    #         if p == '0':
-    #             invalid_chars.add(c)
-    #         if p == '1':
-    #             needed_chars.add(c)
-    #         if p == '2':
-    #             set_chars.add(c)
-    #     # print("invalid, needed, set (1): ", invalid_chars, needed_chars, set_chars)
-    #     invalid_chars = invalid_chars - set_chars
-    #     invalid_chars = invalid_chars - needed_chars
-    #     # print("invalid, needed, set (2): ", invalid_chars, needed_chars, set_chars)
-    #     return (invalid_chars, needed_chars)
 
     @staticmethod
     def __compare(target, guess):
@@ -135,7 +89,7 @@ class Hints(Search):
         ## Tengo el problema de inicializar tries sin perder los classmethods de Corpus ni reescribirlos
         try:
             _ = self.__tries
-        except:
+        except AttributeError:
             self.__tries = []
             self.__lista = self.lista
 
@@ -150,9 +104,9 @@ class Hints(Search):
             lista = self.__lista
 
             ## Recorre las apuestas, reduciendo el corpus en cada iteración
-            for t in self.__tries:
-                if t[0]:
-                    lista = self.__reduce(lista, t[0], t[1])
+            for (w, t) in self.__tries:
+                if w:
+                    lista = self.__reduce(lista, w, t)
 
             ## Guarda el corpus para la próxima vez
             self.__lista = lista
@@ -164,7 +118,5 @@ class Hints(Search):
                 print(lista)
             else:
                 return lista
-                
-
         else:
             raise HintsError("Error en la apuesta")

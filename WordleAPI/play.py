@@ -69,7 +69,7 @@ class Play(Hints):
     def guess(self, word):
         try:
             _ = self.__word
-        except:
+        except AttributeError:
             self.reset()
             output.aviso("JUEGO REINICIADO")
 
@@ -104,7 +104,5 @@ class Play(Hints):
         for (w, t) in self.__tries[:-1]:
             output.printc(w, t)
         output.printc(word, test, last=True)
-        #output.printc(word, test)
-        # self.__last_word = word
-        # self.__last_test = test
+
         return test
