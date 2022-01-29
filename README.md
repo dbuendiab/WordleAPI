@@ -32,3 +32,8 @@ otro en Play, el malo. Se unifican usando solo el de Hints)
 
 * Tener todos los corpus guardados al iniciar
 * Tenerlos en una base de datos en vez de en texto
+
+## Now
+
+* ✅Reparar hint() en Play.candidates()
+* Cambiar los print() en Hints.hint

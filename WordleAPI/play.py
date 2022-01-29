@@ -56,15 +56,16 @@ class Play(Hints):
     def the_word(self):
         return self.__word
 
+    ## TODO Reparar candidates -> hint()
     def candidates(self, num=0):
         """Devuelve la lista de hints para el juego actual
         Los hints se recalculan cada vez que se prueba un intento
         mediante guess()"""
         if num <= 0:
-            return self.__hints
+            return self.hint()
             # return self.hint(self.__last_word, self.__last_test)
         else:
-            return random.salple(self.__hints, num)
+            return random.sample(self.hint(), num)
             # return random.sample(self.hint(self.__last_word, self.__last_test), num)
 
     def guess(self, word):

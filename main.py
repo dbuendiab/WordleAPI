@@ -71,6 +71,8 @@ def test2():
 
 
 def test3():
+    print("TEST 3\n======")
+    print("Prueba de la clase Play")
     from WordleAPI import Play
     p = Play.español()
     p.reset()
@@ -83,8 +85,17 @@ def test3():
     print(p.guess('racor'))
     print(p.guess('rajon'))
 
+def test4():
+    print("TEST 4\n======")
+    print("Prueba de la clase Hints")
+    from WordleAPI import Hints
+    h = Hints.español()
+    lista = h.hint_list('menta', '00101')
+    print(len(lista))
+
 
 if __name__ == "__main__":
-    # test1()
-    # test2()
+    test1()
+    test2()
     test3()
+    test4()

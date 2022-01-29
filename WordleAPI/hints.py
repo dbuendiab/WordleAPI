@@ -44,7 +44,22 @@ class Hints(Search):
         self.__tries = []
         self.__lista = self.lista
 
-    def hint(self, word, test, verbose=True):
+    def hint(self, word, test):
+        """Presenta en pantalla la lista de palabras que cumplen
+        la condición representada por 'word0 y 'test' (ver hint_list)"""
+        lista = self.hint_list(word, test)
+        length = len(lista)
+        if length == 1:
+            print("Acertó!!!")
+        elif length == 0:
+            print("No hay candidatas")
+        else:
+            lista = sorted(lista)
+            print("Hay", length, "palabras candidatas")
+            print(lista)
+
+
+    def hint_list(self, word, test):
         """Devuelve una colección de palabras que cumplen con el criterio descrito por 'test'.
         Construye un corpus nuevo limitado a esa colección, para usarlo en la siguiente iteración.
         Parámetros:
@@ -59,13 +74,16 @@ class Hints(Search):
             self.__tries = []
             self.__lista = self.lista
 
+        lista = None
+
         ## test = '22222' -> Éxito!
-        if test == "2" * self.word_size:  ## 22222, por defecto
-            print("Acertó!!!")
-            return
+        if test == ("2" * self.word_size):  ## 22222, por defecto
+            self.__tries.append((word, test))
+            lista = [word]
+            self.__lista = lista
 
         ## Añadir la apuesta a la lista de apuestas
-        if self.__validar_apuesta(word, test):
+        elif self.__validar_apuesta(word, test):
             self.__tries.append((word, test))
             lista = self.__lista
 
@@ -77,43 +95,18 @@ class Hints(Search):
             ## Guarda el corpus para la próxima vez
             self.__lista = lista
 
-            ## Muestra las palabras válidas tras la última iteración
-            lista = sorted(lista)
-            if verbose is True:
-                print("Hay", len(lista), "palabras candidatas")
-                print(lista)
-            else:
-                return lista
         else:
             raise HintsError("Error en la apuesta")
 
-    def __validar_apuesta(self, word, test):
-        ## Comprueba que word y test tengan formatos correctos
-        if len(word) != self.word_size:
-            print("La palabra debe tener {} caracteres".format(self.word_size))
-            return False
-        if len(test) != self.word_size:
-            print("El test debe tener {} caracteres (0, 1 y 2)".format(self.word_size))
-            return False
-        patron = "[012]{%d}" % self.word_size
-        if not re.match(patron, test):
-            print("El test usa solo: 0-letra no está; 1-letra está, pero no en su sitio; 2-letra está en su sitio")
-            return False
-        return True
-
-    def __reduce(self, lista, word, test):
-        ## Recorrer el corpus validándolo contra la salida de compare()
-        nueva_lista = []
-        for elem in lista:
-            comparation, _ = Hints.__compare(elem, word)
-            if comparation == test:
-                nueva_lista.append(elem)
-        return nueva_lista
+        ## Devuelve las palabras válidas tras la última iteración
+        return lista
 
     @staticmethod
     def compare(target, guess):
         """Compara la palabra propuesta (guess) con la buscada (target)
         Devuelve la cadena de aciertos (p.ej. '22001')"""
+        if len(target) != len(guess):
+            raise HintsError("Las cadenas '{}' y '{}' tienen longitudes diferentes".format(target, guess))
         result = ''
         forbidden = set()
         i = 0
@@ -133,3 +126,26 @@ class Hints(Search):
                     forbidden.add(g)
             i += 1
         return (result, forbidden)
+
+    def __validar_apuesta(self, word, test):
+        ## Comprueba que word y test tengan formatos correctos
+        if len(word) != self.word_size:
+            print("La palabra debe tener {} caracteres".format(self.word_size))
+            return False
+        if len(test) != self.word_size:
+            print("El test debe tener {} caracteres (0, 1 y 2)".format(self.word_size))
+            return False
+        patron = "[012]{%d}" % self.word_size
+        if not re.match(patron, test):
+            print("El test usa solo: 0-letra no está; 1-letra está, pero no en su sitio; 2-letra está en su sitio")
+            return False
+        return True
+
+    def __reduce(self, lista, word, test):
+        ## Recorrer el corpus validándolo contra la salida de compare()
+        nueva_lista = []
+        for elem in lista:
+            comparation, _ = Hints.compare(elem, word)
+            if comparation == test:
+                nueva_lista.append(elem)
+        return nueva_lista
