@@ -9,7 +9,7 @@ import pytest
 def test_init():
     "Comprobación funcionamiento instancia Hints"
     ## Instanciación
-    h = Hints.español()
+    h = Hints.esp()
     assert(isinstance(h, Hints))
     assert(isinstance(h, Search))
     assert(isinstance(h, Corpus))
@@ -51,10 +51,10 @@ def test_init():
     assert(h.tries == [('menta', '00101'), ('nariz', '12100'), ('barro', '02101'), ('raros', '22020')])
     h.hint_list('racor', '22020')
     assert(h.tries == [('menta', '00101'), ('nariz', '12100'), ('barro', '02101'), ('raros', '22020'),
-    ('racor', '22020')])
+                       ('racor', '22020')])
     h.hint_list('rajon', '22222')
     assert(h.tries == [('menta', '00101'), ('nariz', '12100'), ('barro', '02101'), ('raros', '22020'),
-    ('racor', '22020'), ('rajon', '22222')])
+                       ('racor', '22020'), ('rajon', '22222')])
 
     ## Errores en compare() si longitudes distintas
     with pytest.raises(HintsError):
@@ -63,4 +63,3 @@ def test_init():
         h.hint('antonio', '0212')
     with pytest.raises(HintsError):
         h.hint('antonio', '1232100')
-

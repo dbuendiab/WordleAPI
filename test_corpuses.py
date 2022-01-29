@@ -4,7 +4,7 @@ from WordleAPI import Corpus
 
 def test_esp():
     """Fichero en español"""
-    c = Corpus.español()
+    c = Corpus.esp()
     assert(isinstance(c, Corpus))
     assert(isinstance(c, CorpusBase))
     assert(c.origen == 'txt\\CREA_total.TXT')
@@ -25,7 +25,7 @@ def test_esp():
 
 def test_ing():
     """Fichero en ingles"""
-    c = Corpus.ingles()
+    c = Corpus.ing()
     assert(isinstance(c, Corpus))
     assert(isinstance(c, CorpusBase))
     assert(c.origen == 'txt\\words_alpha.txt')
@@ -44,7 +44,7 @@ def test_ing():
 
 def test_cat():
     """Fichero en catalán"""
-    c = Corpus.catalan()
+    c = Corpus.cat()
     assert(isinstance(c, Corpus))
     assert(isinstance(c, CorpusBase))
     assert(c.origen == 'txt\\paraules_cat.txt')
@@ -63,7 +63,7 @@ def test_cat():
 
 def test_esp8():
     """Fichero en español"""
-    c = Corpus.español(word_size=8)
+    c = Corpus.esp(word_size=8)
     assert(isinstance(c, Corpus))
     assert(isinstance(c, CorpusBase))
     assert(c.origen == 'txt\\CREA_total.TXT')
@@ -82,7 +82,7 @@ def test_esp8():
 
 def test_ing11():
     """Fichero en ingles"""
-    c = Corpus.ingles(word_size=11)
+    c = Corpus.ing(word_size=11)
     assert(isinstance(c, Corpus))
     assert(isinstance(c, CorpusBase))
     assert(c.origen == 'txt\\words_alpha.txt')
@@ -101,7 +101,7 @@ def test_ing11():
 
 def test_cat3():
     """Fichero en catalán"""
-    c = Corpus.catalan(word_size=3)
+    c = Corpus.cat(word_size=3)
     assert(isinstance(c, Corpus))
     assert(isinstance(c, CorpusBase))
     assert(c.origen == 'txt\\paraules_cat.txt')

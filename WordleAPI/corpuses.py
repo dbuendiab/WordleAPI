@@ -6,15 +6,15 @@ ruta_catalan = r"txt\paraules_cat.txt"
 
 
 class Corpus(CorpusBase):
-    """Devuelve los corpus de los diversos idiomas disponibles"""
+    """Devuelve los corpus de los idiomas predeterminados disponibles"""
 
     @classmethod
-    def ingles(cls, word_size=5):
+    def ing(cls, word_size=5):
         """Corpus predeterminado en inglés"""
         return cls(ruta_ingles, word_size=word_size)
 
     @classmethod
-    def español(cls, word_size=5):
+    def esp(cls, word_size=5):
         """Corpus predeterminado en español"""
         patron1 = r".+\t(\w+).+"
         patron2 = r".+\t.+\t\s*(\d+\.\d+)"
@@ -23,6 +23,6 @@ class Corpus(CorpusBase):
         return cls(ruta_español, pattern=patron1, word_size=word_size, pattern_freq=patron2, list_char_conversion=acentos, ignore_lines=ignore_lines)
 
     @classmethod
-    def catalan(cls, word_size=5):
+    def cat(cls, word_size=5):
         "Corpus predeterminado en catalán"
         return cls(ruta_catalan, word_size=word_size)

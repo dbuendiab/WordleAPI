@@ -37,3 +37,7 @@ otro en Play, el malo. Se unifican usando solo el de Hints)
 
 * ✅Reparar hint() en Play.candidates()
 * Cambiar los print() en Hints.hint
+
+## Branch idioms
+
+* Cambiar los nombres de los method class: español -> spa, ingles -> ing, catalan -> cat (con todo el lío asociado)

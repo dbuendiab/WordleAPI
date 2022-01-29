@@ -37,27 +37,27 @@ def test1():
     "Cargar diferentes corpus"
     print("TEST 1\n======")
     print("Cargar corpus inglés por defecto (word_size=5)")
-    cp = Corpus.ingles()
+    cp = Corpus.ing()
     show_data_corpus(cp, "wound", "kaska")
 
     print("Cargar corpus español por defecto (word_size=5)")
-    cp = Corpus.español()
+    cp = Corpus.esp()
     show_data_corpus(cp, "corta", "crrta")
 
     print("Cargar corpus catalán por defecto (word_size=5)")
-    cp = Corpus.catalan()
+    cp = Corpus.cat()
     show_data_corpus(cp, "camio", "xscot")
 
     print("Cargar corpus inglés con word_size=8 (no default)")
-    cp = Corpus.ingles(word_size=8)
+    cp = Corpus.ing(word_size=8)
     show_data_corpus(cp, "exploder", "ppccppcc")
 
     print("Cargar corpus español con word_size=10 (no default)")
-    cp = Corpus.español(word_size=10)
+    cp = Corpus.esp(word_size=10)
     show_data_corpus(cp, "paradillas", "pprrdillas")
 
     print("Cargar corpus catalán con word_size=3 (no default)")
-    cp = Corpus.catalan(word_size=3)
+    cp = Corpus.cat(word_size=3)
     show_data_corpus(cp, "mar", "xxx")
 
 
@@ -65,7 +65,7 @@ def test2():
     "Pruebas con el método select() de corpuses.Corpus()"
     print("TEST 2\n======")
     print("Buscar palabras que empiezan por 'br'")
-    cp = Search.español()
+    cp = Search.esp()
     result = cp.search(lambda x: x[0].startswith('br') and x[1] > 1.0, tipo=1)
     print(result)
 
@@ -74,7 +74,7 @@ def test3():
     print("TEST 3\n======")
     print("Prueba de la clase Play")
     from WordleAPI import Play
-    p = Play.español()
+    p = Play.esp()
     p.reset()
     p._Play__word = 'rajon'
     p._Play__count = 0
@@ -85,11 +85,12 @@ def test3():
     print(p.guess('racor'))
     print(p.guess('rajon'))
 
+
 def test4():
     print("TEST 4\n======")
     print("Prueba de la clase Hints")
     from WordleAPI import Hints
-    h = Hints.español()
+    h = Hints.esp()
     lista = h.hint_list('menta', '00101')
     print(len(lista))
 

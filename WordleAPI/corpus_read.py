@@ -1,9 +1,16 @@
 import codecs
 import re
-## import WordleAPI
 
 
 class CorpusBase:
+    """Clase que sirve para recuperar las palabras de un fichero de texto.
+    Se espera que cada línea represente a una palabra, con un factor de frecuencia opcional
+    Admite patrones regex diferentes para la palabra y la frecuencia, también un filtro para
+    limitar las palabras a cierta longitud y una lista de conversión de caracteres para
+    eliminar/sustituir acentos y otros caracteres indeseados que puedan aparecer.
+    
+    Incluye las funciones exists(), pick() y find(), que permiten unas funcionalidades básicas  
+    sobre el corpus generado."""
 
     def __init__(self, textfile, pattern=None, word_size=5, pattern_freq=None, list_char_conversion=[], ignore_lines=0):
         """Recupera las palabras de un fichero externo
