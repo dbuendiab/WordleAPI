@@ -32,51 +32,17 @@ class Hints(Search):
     ['gadge', 'gaffe', 'gagee', 'gaine', 'gaize', 'gambe', 'gange', 'gauge', 'gauze', 'gazee', 'genae', 'getae']
     """
 
+    @property
+    def tries(self):
+        """Devuelve la lista de intentos [(word, test),...], donde
+        'word' es la palabra propuesta y 'test' es el código de aciertos
+        en formato 'nnnnn', donde n es 0, 1, o 2."""
+        return self.__tries
+
     def reset(self):
         """Reinicia el sistema, borrando las apuestas previas"""
         self.__tries = []
         self.__lista = self.lista
-
-    @staticmethod
-    def __compare(target, guess):
-        result = ''
-        i = 0
-        while i < len(target):
-            t = target[i]
-            g = guess[i]
-            # print(i, t, g)
-            if t == g:
-                result += '2'
-                target = target[:i] + ' ' + target[i + 1:]
-            else:
-                if g in target:
-                    result += '1'
-                    target = target.replace(g, ' ', 1)
-                else:
-                    result += '0'
-            i += 1
-        return result
-
-    def __reduce(self, lista, word, test):
-        ## Recorrer el corpus validándolo contra la salida de compare()
-        nueva_lista = []
-        for elem in lista:
-            if Hints.__compare(elem, word) == test:
-                nueva_lista.append(elem)
-        return nueva_lista
-
-    def __validar_apuesta(self, word, test):
-        if len(word) != self.word_size:
-            print("La palabra debe tener {} caracteres".format(self.word_size))
-            return False
-        if len(test) != self.word_size:
-            print("El test debe tener {} caracteres (0, 1 y 2)".format(self.word_size))
-            return False
-        patron = "[012]{%d}" % self.word_size
-        if not re.match(patron, test):
-            print("El test usa solo: 0-letra no está; 1-letra está, pero no en su sitio; 2-letra está en su sitio")
-            return False
-        return True
 
     def hint(self, word, test, verbose=True):
         """Devuelve una colección de palabras que cumplen con el criterio descrito por 'test'.
@@ -120,3 +86,50 @@ class Hints(Search):
                 return lista
         else:
             raise HintsError("Error en la apuesta")
+
+    def __validar_apuesta(self, word, test):
+        ## Comprueba que word y test tengan formatos correctos
+        if len(word) != self.word_size:
+            print("La palabra debe tener {} caracteres".format(self.word_size))
+            return False
+        if len(test) != self.word_size:
+            print("El test debe tener {} caracteres (0, 1 y 2)".format(self.word_size))
+            return False
+        patron = "[012]{%d}" % self.word_size
+        if not re.match(patron, test):
+            print("El test usa solo: 0-letra no está; 1-letra está, pero no en su sitio; 2-letra está en su sitio")
+            return False
+        return True
+
+    def __reduce(self, lista, word, test):
+        ## Recorrer el corpus validándolo contra la salida de compare()
+        nueva_lista = []
+        for elem in lista:
+            comparation, _ = Hints.__compare(elem, word)
+            if comparation == test:
+                nueva_lista.append(elem)
+        return nueva_lista
+
+    @staticmethod
+    def compare(target, guess):
+        """Compara la palabra propuesta (guess) con la buscada (target)
+        Devuelve la cadena de aciertos (p.ej. '22001')"""
+        result = ''
+        forbidden = set()
+        i = 0
+        while i < len(target):
+            t = target[i]
+            g = guess[i]
+            # print(i, t, g)
+            if t == g:
+                result += '2'
+                target = target[:i] + ' ' + target[i + 1:]
+            else:
+                if g in target:
+                    result += '1'
+                    target = target.replace(g, ' ', 1)
+                else:
+                    result += '0'
+                    forbidden.add(g)
+            i += 1
+        return (result, forbidden)

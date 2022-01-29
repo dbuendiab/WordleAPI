@@ -66,10 +66,25 @@ def test2():
     print("TEST 2\n======")
     print("Buscar palabras que empiezan por 'br'")
     cp = Search.español()
-    result = cp.select(lambda x: x[0].startswith('br') and x[1] > 1.0, tipo=1)
+    result = cp.search(lambda x: x[0].startswith('br') and x[1] > 1.0, tipo=1)
     print(result)
 
 
+def test3():
+    from WordleAPI import Play
+    p = Play.español()
+    p.reset()
+    p._Play__word = 'rajon'
+    p._Play__count = 0
+    print(p.guess('menta'))
+    print(p.guess('nariz'))
+    print(p.guess('barro'))
+    print(p.guess('raros'))
+    print(p.guess('racor'))
+    print(p.guess('rajon'))
+
+
 if __name__ == "__main__":
-    test1()
-    test2()
+    # test1()
+    # test2()
+    test3()

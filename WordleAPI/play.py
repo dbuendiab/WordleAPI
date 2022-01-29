@@ -6,6 +6,7 @@ from WordleAPI import output
 class PlayError(Exception):
     pass
 
+
 ## TODO Modificar los ejemplos con el comportamiento actualizado
 class Play(Hints):
     """Inicia un juego Wordle local
@@ -47,8 +48,8 @@ class Play(Hints):
         # self.__last_word = None
         # self.__last_test = None
         self.__count = 0
-        self.__tries = []
-        self.__forbidden = set()
+        # self.__tries = []
+        # self.__forbidden = set()
         super().reset()   ## Los hints se actualizarán automáticamente con guess()
 
     @property
@@ -85,23 +86,26 @@ class Play(Hints):
             output.printc(word, "2" * len(word), last=True)
             return True
 
-        test = ""
-        for (c1, c2) in zip(word, self.__word):
-            if c1 == c2:
-                test += "2"
-            else:
-                if c1 in self.__word:
-                    test += "1"
-                else:
-                    test += "0"
-                    self.__forbidden.add(c1)
+        test, forbidden = Hints.compare(self.__word, word)
 
-        self.__hints = self.hint(word, test, verbose=False)
+        # test = ""
+        # for (c1, c2) in zip(word, self.__word):
+        #     if c1 == c2:
+        #         test += "2"
+        #     else:
+        #         if c1 in self.__word:
+        #             test += "1"
+        #         else:
+        #             test += "0"
+        #             self.__forbidden.add(c1)
+        # self.__hints = self.hint(word, test, verbose=False)
 
-        self.__tries.append((word, test))
+        ## self.__tries.append((word, test))
 
-        output.aviso2(''.join(sorted(list(self.__forbidden))))
-        for (w, t) in self.__tries[:-1]:
+        forbidden = ''.join(sorted(list(forbidden)))
+        output.aviso2("forbidden: [{}]".format(forbidden))
+
+        for (w, t) in self.tries[:-1]:
             output.printc(w, t)
         output.printc(word, test, last=True)
 
