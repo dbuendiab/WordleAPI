@@ -35,6 +35,6 @@ def test_search():
 
     assert(s.exists('habla') is True)
 
-    assert(s.regex('.a.o.')[0] == 'mayor')
-    assert(s.endswith('sus')[0] == 'jesus')
-    assert(s.startswith('cre')[0] == 'crear')
+    assert(s.regex('.a.o.')[0] == 'aamod')
+    assert(s.endswith('sus')[0] == 'aesus')
+    assert(s.startswith('cre')[0] == 'cread')

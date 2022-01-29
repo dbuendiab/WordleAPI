@@ -48,8 +48,9 @@ class Play(Hints):
         # self.__last_word = None
         # self.__last_test = None
         self.__count = 0
-        # self.__tries = []
-        # self.__forbidden = set()
+        self.__tries = []
+        self.__forbidden = set()
+        self.__candidates = []
         super().reset()   ## Los hints se actualizarán automáticamente con guess()
 
     @property
@@ -61,53 +62,49 @@ class Play(Hints):
         """Devuelve la lista de hints para el juego actual
         Los hints se recalculan cada vez que se prueba un intento
         mediante guess()"""
-        if num <= 0:
-            return self.hint()
-            # return self.hint(self.__last_word, self.__last_test)
-        else:
-            return random.sample(self.hint(), num)
-            # return random.sample(self.hint(self.__last_word, self.__last_test), num)
+
+        words = self.__candidates
+        if len(words) > 30:
+            words = random.sample(self.__candidates, 30)
+        words = sorted(words)
+        output.candidatas(', '.join(words))
 
     def guess(self, word):
         try:
             _ = self.__word
         except AttributeError:
             self.reset()
-            output.aviso("JUEGO REINICIADO")
+            print()
+            output.aviso("          JUEGO REINICIADO            ")
 
         if self.exists(word) is False:
             output.aviso2("Esa palabra no existe")
-            return None
+            return
 
         self.__count += 1
+        print()
         output.aviso2("Intento: {}".format(self.__count))
 
         if self.__word == word:
-            output.aviso("ACERTÓ!!!")
+            output.aviso2("¡Correcto!")
             output.printc(word, "2" * len(word), last=True)
-            return True
+            self.__candidates = [word]
+            return
 
+        ## Uso la función compare de Hints para obtener el test
         test, forbidden = Hints.compare(self.__word, word)
 
-        # test = ""
-        # for (c1, c2) in zip(word, self.__word):
-        #     if c1 == c2:
-        #         test += "2"
-        #     else:
-        #         if c1 in self.__word:
-        #             test += "1"
-        #         else:
-        #             test += "0"
-        #             self.__forbidden.add(c1)
-        # self.__hints = self.hint(word, test, verbose=False)
+        ## Pero el tries de Hints no me vale aquí, uso uno propio de Play
+        self.__tries.append((word, test))
+        self.__candidates = self.hint_list(word, test)
 
-        ## self.__tries.append((word, test))
+        ## Hay que añadir las nuevas letras descartadas a las anteriores
+        self.__forbidden = self.__forbidden.union(forbidden)
 
-        forbidden = ''.join(sorted(list(forbidden)))
-        output.aviso2("forbidden: [{}]".format(forbidden))
+        ## Presentación de los datos
+        forbidden_string = ' '.join(sorted(list(self.__forbidden))).upper()
+        output.forbidden(forbidden_string)
 
-        for (w, t) in self.tries[:-1]:
+        for (w, t) in self.__tries:
             output.printc(w, t)
-        output.printc(word, test, last=True)
-
-        return test
+        ## output.printc(word, test, last=True)

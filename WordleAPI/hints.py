@@ -1,13 +1,13 @@
 import re
 
-from WordleAPI import Search
+from WordleAPI import Corpus
 
 
 class HintsError(Exception):
     pass
 
 
-class Hints(Search):
+class Hints(Corpus):
     """Carga un corpus (en español, inglés, catalán o custom) y permite obtener
     una colección de palabras que puedan usarse como ayuda para jugar al
     Wordle. El formato de la respuesta de Wordle se traduce como '01122'
@@ -19,10 +19,10 @@ class Hints(Search):
     restringido por las anteriores. Si se quiere volver a empezar, debe usarse
     el método reset()
 
-    Puede hacerse servir como ayuda para los juegos
-    Wordle en inglés: https://www.powerlanguage.co.uk/wordle/
-    Wordle en español: https://wordle.danielfrg.com/
-    Wordle en catalán: https://gelozp.com/games/wordle/
+    Puede hacerse servir como ayuda para los juegos<br>
+    Wordle en inglés: https://www.powerlanguage.co.uk/wordle/<br>
+    Wordle en español: https://wordle.danielfrg.com/<br>
+    Wordle en catalán: https://gelozp.com/games/wordle/<br>
     O en modo custom, como en https://hellowordl.net/, donde puede cambiarse el número de letras.
 
     Ejemplo:
@@ -58,7 +58,6 @@ class Hints(Search):
             print("Hay", length, "palabras candidatas")
             print(lista)
 
-
     def hint_list(self, word, test):
         """Devuelve una colección de palabras que cumplen con el criterio descrito por 'test'.
         Construye un corpus nuevo limitado a esa colección, para usarlo en la siguiente iteración.
@@ -72,7 +71,7 @@ class Hints(Search):
             _ = self.__tries
         except AttributeError:
             self.__tries = []
-            self.__lista = self.lista
+            self.__lista = self.lista  ## Viene de CorpusBase
 
         lista = None
 
@@ -107,7 +106,7 @@ class Hints(Search):
         Devuelve la cadena de aciertos (p.ej. '22001')"""
         if len(target) != len(guess):
             raise HintsError("Las cadenas '{}' y '{}' tienen longitudes diferentes".format(target, guess))
-        result = ''
+        result = '0' * len(target)
         forbidden = set()
         i = 0
         while i < len(target):
@@ -115,16 +114,23 @@ class Hints(Search):
             g = guess[i]
             # print(i, t, g)
             if t == g:
-                result += '2'
+                result = result[:i] + '2' + result[i + 1:]
                 target = target[:i] + ' ' + target[i + 1:]
-            else:
+            i += 1
+
+        i = 0
+        while i < len(guess):
+            g = guess[i]
+            r = result[i]
+            if r != '2':
                 if g in target:
-                    result += '1'
+                    result = result[:i] + '1' + result[i + 1:]
                     target = target.replace(g, ' ', 1)
                 else:
-                    result += '0'
+                    result = result[:i] + '0' + result[i + 1:]
                     forbidden.add(g)
             i += 1
+
         return (result, forbidden)
 
     def __validar_apuesta(self, word, test):

@@ -7,6 +7,15 @@ FG_PURPLE = "35"
 FG_CYAN = "36"
 FG_WHITE = "37"
 
+FGB_BLACK = "90"
+FGB_RED = "91"
+FGB_GREEN = "92"
+FGB_YELLOW = "93"
+FGB_BLUE = "94"
+FGB_PURPLE = "95"
+FGB_CYAN = "96"
+FGB_WHITE = "97"
+
 BG_BLACK = "40"
 BG_RED = "41"
 BG_GREEN = "42"
@@ -16,19 +25,43 @@ BG_PURPLE = "45"
 BG_CYAN = "46"
 BG_WHITE = "47"
 
+BGB_BLACK = "100"
+BGB_RED = "101"
+BGB_GREEN = "102"
+BGB_YELLOW = "103"
+BGB_BLUE = "104"
+BGB_PURPLE = "105"
+BGB_CYAN = "106"
+BGB_WHITE = "107"
+
 plantilla = "\x1b[%sm %s \x1b[0m"
 
 
 def color(fg, bg):
-    return "1;{};{}".format(fg, bg)
+    return "0;{};{}".format(fg, bg)
+
 
 def aviso(texto):
     r = plantilla % (color(FG_WHITE, BG_RED), texto)
     print(r)
 
+
 def aviso2(texto):
-    r = plantilla % (color(FG_WHITE, BG_PURPLE), texto)
+    r = plantilla % (color(FGB_WHITE, BG_BLACK), texto)
     print(r)
+
+
+def forbidden(texto):
+    s = plantilla % (color(FG_WHITE, BG_BLACK), "descartes: ")
+    r = plantilla % (color(FG_YELLOW, BG_BLACK), texto)
+    print(s + r)
+
+
+def candidatas(texto):
+    s = plantilla % (color(FG_WHITE, BG_BLACK), "posibles: ")
+    r = plantilla % (color(FGB_BLUE, BG_BLACK), texto)
+    print(s + r)
+
 
 def printc(guess, test, last=False):
     s = ""
@@ -38,11 +71,11 @@ def printc(guess, test, last=False):
             r += plantilla % (color(FG_WHITE, BG_BLACK), ' ')
             s += plantilla % (color(FG_WHITE, BG_BLACK), ch)
         if cl == '1':
-            r += plantilla % (color(FG_WHITE, BG_YELLOW), ' ')
-            s += plantilla % (color(FG_WHITE, BG_YELLOW), ch)
+            r += plantilla % (color(FG_BLACK, BG_YELLOW), ' ')
+            s += plantilla % (color(FG_BLACK, BG_YELLOW), ch)
         if cl == '2':
-            r += plantilla % (color(FG_WHITE, BG_GREEN), ' ')
-            s += plantilla % (color(FG_WHITE, BG_GREEN), ch)
+            r += plantilla % (color(FG_BLACK, BG_GREEN), ' ')
+            s += plantilla % (color(FG_BLACK, BG_GREEN), ch)
     if last is True:
         print(r)
     print(s)

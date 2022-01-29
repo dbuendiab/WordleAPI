@@ -1,6 +1,6 @@
 from WordleAPI.corpus_read import CorpusBase
 from WordleAPI import Corpus
-from WordleAPI import Search
+## from WordleAPI import Search
 from WordleAPI import Hints
 from WordleAPI import HintsError
 import pytest
@@ -11,7 +11,7 @@ def test_init():
     ## Instanciación
     h = Hints.esp()
     assert(isinstance(h, Hints))
-    assert(isinstance(h, Search))
+    ## assert(isinstance(h, Search))
     assert(isinstance(h, Corpus))
     assert(isinstance(h, CorpusBase))
 

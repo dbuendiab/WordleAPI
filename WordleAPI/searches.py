@@ -82,12 +82,12 @@ class Search(Corpus):
 
         return words
 
-    def regex(self, regex, orden_func=None, reverse=None, count=None, tipo=0):
+    def regex(self, regex, orden_func=lambda x: x[0], reverse=False, count=None, tipo=0):
         patron = re.compile(regex)
         return self.search(lambda x: patron.match(x[0]), orden_func, reverse, count, tipo)
 
-    def startswith(self, init_chars, orden_func=None, reverse=None, count=None, tipo=0):
+    def startswith(self, init_chars, orden_func=lambda x: x[0], reverse=False, count=None, tipo=0):
         return self.search(lambda x: x[0].startswith(init_chars), orden_func, reverse, count, tipo)
 
-    def endswith(self, end_chars, orden_func=None, reverse=None, count=None, tipo=0):
+    def endswith(self, end_chars, orden_func=lambda x: x[0], reverse=False, count=None, tipo=0):
         return self.search(lambda x: x[0].endswith(end_chars), orden_func, reverse, count, tipo)

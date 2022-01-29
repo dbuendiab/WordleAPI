@@ -76,14 +76,16 @@ def test3():
     from WordleAPI import Play
     p = Play.esp()
     p.reset()
-    p._Play__word = 'rajon'
+    p._Play__word = 'could'
     p._Play__count = 0
-    print(p.guess('menta'))
-    print(p.guess('nariz'))
-    print(p.guess('barro'))
-    print(p.guess('raros'))
-    print(p.guess('racor'))
-    print(p.guess('rajon'))
+    p.guess('women')
+    p.guess('gouts')
+    p.guess('pouch')
+    p.candidates()
+    p.guess('courd')
+    p.candidates()
+    p.guess('could')
+    p.candidates()
 
 
 def test4():
@@ -96,7 +98,7 @@ def test4():
 
 
 if __name__ == "__main__":
-    test1()
-    test2()
+    ## test1()
+    ## test2()
     test3()
-    test4()
+    ## test4()
