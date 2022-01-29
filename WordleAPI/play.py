@@ -6,7 +6,7 @@ from WordleAPI import output
 class PlayError(Exception):
     pass
 
-
+## TODO Modificar los ejemplos con el comportamiento actualizado
 class Play(Hints):
     """Inicia un juego Wordle local
 

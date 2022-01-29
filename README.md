@@ -23,6 +23,7 @@ nariz 12100
 barro 02111 - debería ser 02101, ya que no hay dos erres en rajon
 raros 22120 - como antes, debe ser 22020
 racor 22021 - debe ser 22020
+* Estudiar la estructura de Hints y Play para que compartan __tries, quizás baste con hacer la estructura pública.
 
 ## Sugerencias
 
