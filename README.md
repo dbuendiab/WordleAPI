@@ -13,8 +13,9 @@ Y hasta donde veo ahora, Play no necesita Search para nada.
 
 ## Issues
 
+* Actualizar la documentación del código para contemplar los cambios de última hora
 * Considerar un flag opcional de ayudas sí/no
-* Mejorar el corpus en español (eliminando basura) y en catalán o inglés (añadiendo frecuencias, si las encuentro. Hace falta una forma de limitar el corpus por frecuencia en los casos en que sea posible (español), ya que muchas de las palabras del corpus no son razonablemente válidas
+* Mejorar los corpus en catalán o inglés (añadiendo frecuencias, si las encuentro)
 
 ## Sugerencias
 
@@ -23,6 +24,7 @@ Y hasta donde veo ahora, Play no necesita Search para nada.
 
 ## Issues cerrados
 
+* ✅Cambiado el corpus en español por un subconjunto de palabras de +3 letras y frecuencia > 0.5. Salen algo más de 60.000.
 * ✅Cambiar los print() en Hints.hint
 * ✅Hints.hint() no respeta el límite COUNT=200 ¿Por qué? (Porque Hints.hint() no usa Search.search())
 * ✅forbidden (Play) no se acumulan entre tiradas
@@ -35,9 +37,15 @@ Y hasta donde veo ahora, Play no necesita Search para nada.
 * ✅Ver diferencias regex(), candidates() y hint()
 * ✅Devolver las letras prohibidas (opcional)
 * ✅Comprobar qué pasa con el juego cuando la palabra es 'rajon' y los sucesivos intentos: 
+
     menta 00101
+
     nariz 12100
+
     barro 02111 - debería ser 02101, ya que no hay dos erres en rajon
+
     raros 22120 - como antes, debe ser 22020
+
     racor 22021 - debe ser 22020
+
     (Respuesta: usaba dos procesos diferentes, uno en Hints, el bueno, y otro en Play, el malo. Se unifican usando solo el de Hints)
