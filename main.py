@@ -74,7 +74,7 @@ def test3():
     print("TEST 3\n======")
     print("Prueba de la clase Play")
     from WordleAPI import Play
-    p = Play.esp()
+    p = Play.ing()
     p.reset()
     p._Play__word = 'could'
     p._Play__count = 0
@@ -98,7 +98,7 @@ def test4():
 
 
 if __name__ == "__main__":
-    ## test1()
-    ## test2()
+    test1()
+    test2()
     test3()
-    ## test4()
+    test4()

@@ -1,9 +1,9 @@
+import os.path
 from WordleAPI import CorpusBase
 
-ruta_ing = r"txt\words_alpha.txt"
-## ruta_esp = r"txt\CREA_total.TXT"
-ruta_esp = r"txt\palabra2.txt"
-ruta_cat = r"txt\paraules_cat.txt"
+ruta_ing = os.path.join("txt", "words_alpha.txt")
+ruta_esp = os.path.join("txt", "palabra2.txt")
+ruta_cat = os.path.join("txt", "paraules_cat.txt")
 
 
 class Corpus(CorpusBase):

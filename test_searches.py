@@ -19,9 +19,9 @@ def test_search():
     def orden(x):
         return x[0][1:]
     r = s.search(filtro, orden, reverse=True)
-    assert(len(r) == 39)
-    assert(r[0] == 'lamyr')
-    assert(r[-1] == 'laman')
+    assert(len(r) == 4)
+    assert(r[0] == 'lampe')
+    assert(r[-1] == 'lamas')
 
     def filtro(x):
         return x[0].startswith('hab')
@@ -29,12 +29,12 @@ def test_search():
     def orden(x):
         return x[0]
     r = s.search(filtro, orden)
-    assert(len(r) == 46)
-    assert(r[0] == 'habad')
-    assert(r[-1] == 'habze')
+    assert(len(r) == 13)
+    assert(r[0] == 'habas')
+    assert(r[-1] == 'habre')
 
     assert(s.exists('habla') is True)
 
-    assert(s.regex('.a.o.')[0] == 'aamod')
-    assert(s.endswith('sus')[0] == 'aesus')
-    assert(s.startswith('cre')[0] == 'cread')
+    assert(s.regex('.a.o.')[0] == 'aaron')
+    assert(s.endswith('sus')[0] == 'jesus')
+    assert(s.startswith('cre')[0] == 'crean')
