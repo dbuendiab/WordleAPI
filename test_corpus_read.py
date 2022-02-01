@@ -1,3 +1,4 @@
+import os.path
 import pytest
 from WordleAPI import CorpusBase
 
@@ -6,9 +7,9 @@ class TestClass:
 
     def test_one(self):
         """Captura de un fichero de texto de prueba"""
-        c = CorpusBase("txt\\test.txt")
+        c = CorpusBase(os.path.join("txt", "test.txt"))
         assert(isinstance(c, CorpusBase))
-        assert(c.origen == 'txt\\test.txt')
+        assert(c.origen == os.path.join("txt", "test.txt"))
         assert(c.num_lineas == 11)
         assert(c.num_palabras == 10)
         assert(c.corpus[0] == ('sobre', 1))
@@ -25,7 +26,7 @@ class TestClass:
     def test_two(self):
         """Captura de un texto que incluye frecuencias
         y cancelación de caracteres con acentos"""
-        fich = "txt\\test2.txt"
+        fich = os.path.join("txt", "test2.txt")
         p1 = r"\('(\w+).+"
         p2 = r"\('\w+', (\d+\.\d+)\)"
         xg = [('í', 'i')]
