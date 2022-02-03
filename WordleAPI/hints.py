@@ -50,7 +50,7 @@ class Hints(Corpus):
         lista = self.hint_list(word, test)
         length = len(lista)
         if length == 1:
-            print("Acertó!!!")
+            print(lista)
         elif length == 0:
             print("No hay candidatas")
         else:
